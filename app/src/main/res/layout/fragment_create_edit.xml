@@ -24,7 +24,7 @@
 
 
         <EditText
-            android:id="@+id/note_title"
+            android:id="@+id/note_title_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -33,7 +33,7 @@
             android:hint="@string/note_title_hint"
             android:maxLines="1"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/favorite_toggle_button"
+            app:layout_constraintEnd_toStartOf="@+id/favorite_toggle_button_edit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:maxLength="28"
@@ -41,7 +41,7 @@
             android:inputType="text" />
 
         <ToggleButton
-            android:id="@+id/favorite_toggle_button"
+            android:id="@+id/favorite_toggle_button_edit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/note_date"
+            android:id="@+id/note_date_edit"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -68,21 +68,21 @@
 
             app:layout_constraintEnd_toEndOf="parent"
 
-            app:layout_constraintStart_toStartOf="@+id/favorite_toggle_button"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button" />
+            app:layout_constraintStart_toStartOf="@+id/favorite_toggle_button_edit"
+            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button_edit" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/note_date"
-            app:layout_constraintStart_toStartOf="@+id/note_title"
-            app:layout_constraintTop_toBottomOf="@+id/note_title"
+            app:layout_constraintEnd_toStartOf="@+id/note_date_edit"
+            app:layout_constraintStart_toStartOf="@+id/note_title_edit"
+            app:layout_constraintTop_toBottomOf="@+id/note_title_edit"
             android:fillViewport="true"
             >
 
             <EditText
-                android:id="@+id/note_text"
+                android:id="@+id/note_text_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
