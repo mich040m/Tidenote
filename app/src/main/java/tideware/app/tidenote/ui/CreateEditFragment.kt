@@ -29,5 +29,6 @@ class CreateEditFragment : Fragment() {
         fab_create.setOnClickListener {
             findNavController().navigate(R.id.action_CreateEditFragment_to_MainFragment)
         }
+
     }
 }
