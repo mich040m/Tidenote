@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_create_edit.*
 import tideware.app.tidenote.R
+import tideware.app.tidenote.services.FavoriteService
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -35,5 +36,7 @@ class CreateEditFragment : Fragment() {
 
         note_title_edit.setText(args?.note?.title)
         note_text_edit.setText(args?.note?.text)
+
+        FavoriteService().changeFavorite(this.requireContext(),args?.note!!,favorite_toggle_button_edit)
     }
 }
