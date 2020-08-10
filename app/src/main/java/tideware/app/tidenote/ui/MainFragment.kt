@@ -49,8 +49,8 @@ class MainFragment : Fragment(), CellClickListener {
         }
     }
 
-    override fun onCellClickListener(title: String) {
-        val action = MainFragmentDirections.actionMainFragmentToCreateEditFragment(title)
+    override fun onCellClickListener(note: Note) {
+        val action = MainFragmentDirections.actionMainFragmentToCreateEditFragment(note)
         findNavController().navigate(action)
     }
 

@@ -26,9 +26,9 @@
             android:id="@+id/action_CreateEditFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
         <argument
-            android:name="title"
-            app:argType="string"
+            android:name="note"
+            app:argType="tideware.app.tidenote.model.Note"
             app:nullable="true"
-            android:defaultValue="ble" />
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

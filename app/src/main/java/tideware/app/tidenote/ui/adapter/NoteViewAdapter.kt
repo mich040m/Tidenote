@@ -34,7 +34,7 @@ class NoteViewAdapter(private val notes: List<Note>,private val cellClickListene
         val note: Note = notes[position]
         holder.bind(note)
         holder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(note.title)
+            cellClickListener.onCellClickListener(note)
         }
     }
 

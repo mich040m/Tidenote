@@ -33,6 +33,7 @@ class CreateEditFragment : Fragment() {
 
         val args   = arguments?.let { CreateEditFragmentArgs.fromBundle(it) }
 
-        note_title_edit.setText(args?.title)
+        note_title_edit.setText(args?.note?.title)
+        note_text_edit.setText(args?.note?.text)
     }
 }
