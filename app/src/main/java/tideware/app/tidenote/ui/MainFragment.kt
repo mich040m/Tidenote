@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,12 +16,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 import tideware.app.tidenote.R
 import tideware.app.tidenote.model.Note
+import tideware.app.tidenote.ui.adapter.CellClickListener
 import tideware.app.tidenote.ui.adapter.NoteViewAdapter
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), CellClickListener {
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +45,14 @@ class MainFragment : Fragment() {
 
         note_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = NoteViewAdapter(listOf(Note("bla","ble"),Note("test","test")))
+            adapter = NoteViewAdapter(listOf(Note("bla","ble"),Note("test","test")),this@MainFragment)
         }
     }
+
+    override fun onCellClickListener(title: String) {
+        val action = MainFragmentDirections.actionMainFragmentToCreateEditFragment(title)
+        findNavController().navigate(action)
+    }
+
+
 }

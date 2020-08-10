@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_create_edit.*
 import tideware.app.tidenote.R
 
@@ -30,5 +31,8 @@ class CreateEditFragment : Fragment() {
             findNavController().navigate(R.id.action_CreateEditFragment_to_MainFragment)
         }
 
+        val args   = arguments?.let { CreateEditFragmentArgs.fromBundle(it) }
+
+        note_title_edit.setText(args?.title)
     }
 }

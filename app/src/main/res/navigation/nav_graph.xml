@@ -14,6 +14,7 @@
         <action
             android:id="@+id/action_MainFragment_to_CreateEditFragment"
             app:destination="@id/CreateEditFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/CreateEditFragment"
@@ -24,5 +25,10 @@
         <action
             android:id="@+id/action_CreateEditFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="ble" />
     </fragment>
 </navigation>
