@@ -34,9 +34,15 @@ class CreateEditFragment : Fragment() {
 
         val args   = arguments?.let { CreateEditFragmentArgs.fromBundle(it) }
 
-        note_title_edit.setText(args?.note?.title)
-        note_text_edit.setText(args?.note?.text)
+        var note = args?.note
 
-        FavoriteService().changeFavorite(this.requireContext(),args?.note!!,favorite_toggle_button_edit)
+        note_title_edit.setText(note?.title)
+        note_text_edit.setText(note?.text)
+
+        if(note != null)
+        {
+            FavoriteService().changeFavorite(this.requireContext(),note,favorite_toggle_button_edit)
+        }
+
     }
 }

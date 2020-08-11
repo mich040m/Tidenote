@@ -18,17 +18,17 @@ class NoteViewAdapter(private val notes: List<Note>,private val cellClickListene
 
     class NoteViewHolder(inflater: LayoutInflater,parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(
         R.layout.view_note,parent,false)) {
-        private var mTitleView : TextView? = itemView.findViewById(R.id.note_title)
-        private var mTextView : TextView? = itemView.findViewById(R.id.note_text)
-        private var mFavorite : ToggleButton? = itemView.findViewById(R.id.favorite_toggle_button)
-        private var mDate: TextView? = itemView.findViewById(R.id.note_date)
+        private var myTitleView : TextView? = itemView.findViewById(R.id.note_title)
+        private var myTextView : TextView? = itemView.findViewById(R.id.note_text)
+        private var myFavorite : ToggleButton? = itemView.findViewById(R.id.favorite_toggle_button)
+        private var myDate: TextView? = itemView.findViewById(R.id.note_date)
 
 
         fun bind(note: Note){
-            mTitleView?.text = note.title
-            mTextView?.text = note.text
+            myTitleView?.text = note.title
+            myTextView?.text = note.text
 
-            FavoriteService().changeFavorite(itemView.context,note,mFavorite)
+            FavoriteService().changeFavorite(itemView.context,note,myFavorite)
 
         }
 
