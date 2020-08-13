@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.ToggleButton
 import androidx.core.content.ContextCompat
 import tideware.app.tidenote.R
-import tideware.app.tidenote.model.Note
+import tideware.app.tidenote.data.model.Note
 
 class FavoriteService {
     public fun changeFavorite(context: Context, note: Note, mFavorite: ToggleButton?){
