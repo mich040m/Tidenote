@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import tideware.app.tidenote.R
-import tideware.app.tidenote.model.Note
+import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.services.FavoriteService
 
 class NoteViewAdapter(private val notes: List<Note>,private val cellClickListener: CellClickListener) : RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>() {

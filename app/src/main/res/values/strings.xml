@@ -2,8 +2,8 @@
     <string name="app_name">Tidenote</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">Tidenote</string>
+    <string name="second_fragment_label">Create/Edit</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -13,4 +13,5 @@
     <string name="note_title_hint">Write your title here!</string>
     <string name="date_template">01/01</string>
     <string name="sample_time">10m</string>
+    <string name="delete_all_notes">Delete All Notes</string>
 </resources>
