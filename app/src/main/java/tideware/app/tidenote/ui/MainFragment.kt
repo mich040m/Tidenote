@@ -65,6 +65,7 @@ class MainFragment : Fragment(), CellClickListener {
     }
 
 
+
     //listOf(Note("bla","ble",true,Calendar.getInstance().time,Date(2019,7,7,0,7)),Note("test","test",false,Calendar.getInstance().time, Date(2020,7,4,2,6)))
 
 }
