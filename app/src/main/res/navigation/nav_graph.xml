@@ -27,7 +27,7 @@
             app:destination="@id/MainFragment" />
         <argument
             android:name="note"
-            app:argType="tideware.app.tidenote.model.Note"
+            app:argType="tideware.app.tidenote.data.model.Note"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
