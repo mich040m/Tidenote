@@ -1,10 +1,9 @@
 package tideware.app.tidenote.ui
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -26,6 +25,7 @@ class CreateEditFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         createEditViewModel = ViewModelProvider(this).get(CreateEditViewModel::class.java)
         return inflater.inflate(R.layout.fragment_create_edit, container, false)
 
@@ -55,11 +55,15 @@ class CreateEditFragment : Fragment() {
 
         fab_create.setOnClickListener {
             insertNote(note?.id)
-            findNavController().navigate(R.id.action_CreateEditFragment_to_MainFragment)
+            navigateToMain()
         }
 
 
 
+    }
+
+    private fun navigateToMain() {
+        findNavController().navigate(R.id.action_CreateEditFragment_to_MainFragment)
     }
 
     private fun getNoteFromArgs(): Note? {
@@ -85,5 +89,28 @@ class CreateEditFragment : Fragment() {
         val favorite = favorite_toggle_button_edit.isChecked
 
         return Note(noteId,title,text,favorite,Calendar.getInstance().time,Calendar.getInstance().time)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_delete,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+            R.id.action_delete ->{
+                if (getNoteFromArgs() != null){
+                    createEditViewModel.deleteNote(getNoteFromArgs()!!)
+                    navigateToMain()
+                    Toast.makeText(requireContext(),"Cannot delete until created",Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(requireContext(),"Cannot delete until created",Toast.LENGTH_LONG).show()
+                }
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
     }
 }

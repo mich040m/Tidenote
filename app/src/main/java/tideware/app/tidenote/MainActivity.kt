@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme_NoActionBar)
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-
+        setSupportActionBar(toolbar);
         toolbar.setupWithNavController(findNavController(R.id.nav_host_fragment))
-        toolbar.inflateMenu(R.menu.menu_main)
-        toolbar.setOnMenuItemClickListener {
+
+        /*toolbar.setOnMenuItemClickListener {
 
             return@setOnMenuItemClickListener when(it.itemId){
                 R.id.action_settings ->{
@@ -38,20 +38,13 @@ class MainActivity : AppCompatActivity() {
                 else ->  it.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) || super.onOptionsItemSelected(it)
             }
 
-        }
+        }*/
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
     }
 
 

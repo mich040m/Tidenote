@@ -24,4 +24,9 @@ class CreateEditViewModel(application: Application): AndroidViewModel(applicatio
             repository.insertNote(note)
         }
     }
+    fun deleteNote(note: Note){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteNote(note)
+        }
+    }
 }

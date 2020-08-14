@@ -13,7 +13,8 @@ import tideware.app.tidenote.R
 import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.services.FavoriteService
 
-class NoteViewAdapter(private val notes: List<Note>,private val cellClickListener: CellClickListener) : RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>() {
+class NoteViewAdapter(private val cellClickListener: CellClickListener) : RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>() {
+    private var notes = emptyList<Note>()
 
 
     class NoteViewHolder(inflater: LayoutInflater,parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(
@@ -49,5 +50,10 @@ class NoteViewAdapter(private val notes: List<Note>,private val cellClickListene
     }
 
     override fun getItemCount(): Int = notes.count()
+
+    fun setData(notes: List<Note>){
+        this.notes = notes
+        notifyDataSetChanged()
+    }
 
 }

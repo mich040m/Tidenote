@@ -14,4 +14,5 @@
     <string name="date_template">01/01</string>
     <string name="sample_time">10m</string>
     <string name="delete_all_notes">Delete All Notes</string>
+    <string name="delete_action">Delete</string>
 </resources>

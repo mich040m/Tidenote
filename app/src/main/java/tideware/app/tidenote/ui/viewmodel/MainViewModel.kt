@@ -20,6 +20,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         repository = NoteRepository(noteDao)
         notes = repository.getAllNotes()
     }
+    fun deleteAllNotes(){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteAllNotes()
+        }
+    }
 
 
 
