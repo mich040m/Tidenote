@@ -3,6 +3,7 @@ package tideware.app.tidenote.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -101,9 +102,18 @@ class CreateEditFragment : Fragment() {
         return when(item.itemId){
             R.id.action_delete ->{
                 if (getNoteFromArgs() != null){
-                    createEditViewModel.deleteNote(getNoteFromArgs()!!)
-                    navigateToMain()
-                    Toast.makeText(requireContext(),"Cannot delete until created",Toast.LENGTH_LONG).show()
+
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setPositiveButton("Yes") { _,_->
+                        createEditViewModel.deleteNote(getNoteFromArgs()!!)
+                        Toast.makeText(requireContext(),"Successfully deleted note",Toast.LENGTH_LONG).show()
+                        navigateToMain()
+                    }
+                    builder.setTitle("Delete")
+                    builder.setMessage("Are you sure you want to delete the note?")
+                    builder.setNegativeButton("No"){ _,_ -> }
+                    builder.create().show()
+
                 }else{
                     Toast.makeText(requireContext(),"Cannot delete until created",Toast.LENGTH_LONG).show()
                 }

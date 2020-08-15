@@ -3,13 +3,16 @@ package tideware.app.tidenote.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import tideware.app.tidenote.R
@@ -17,7 +20,9 @@ import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.ui.adapter.CellClickListener
 import tideware.app.tidenote.ui.adapter.NoteViewAdapter
 import tideware.app.tidenote.ui.viewmodel.MainViewModel
-import java.util.*
+import androidx.appcompat.widget.Toolbar
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -25,7 +30,7 @@ import java.util.*
 class MainFragment : Fragment(), CellClickListener {
 
     private lateinit var mainViewModel: MainViewModel
-
+    var check = false
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -33,9 +38,45 @@ class MainFragment : Fragment(), CellClickListener {
         // Inflate the layout for this fragment
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setHasOptionsMenu(true)
+        val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
+        if (check)
+            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
+        else
+            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+
+
+
+        val onBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+
+                checkFavoriteIconChange(t)
+
+            }
+
+        }
+        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner,onBackPressedCallback)
+      //  (activity as AppCompatActivity?)!!.supportActionBar?.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star))
+
+
+        //(activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+
+
+
 
         return inflater.inflate(R.layout.fragment_main, container, false)
 
+    }
+
+    private fun checkFavoriteIconChange(toolbar: Toolbar) {
+        if (!check) {
+            check = true
+            toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
+        } else if (check) {
+            check = false
+            toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,6 +114,10 @@ class MainFragment : Fragment(), CellClickListener {
         return when(item.itemId){
             R.id.action_delete_all ->{
                 deleteAllNotes()
+                true
+            }
+            android.R.id.home ->{
+                Toast.makeText(requireContext(),"Pressed home",Toast.LENGTH_LONG).show()
                 true
             }
             else -> return super.onOptionsItemSelected(item)
