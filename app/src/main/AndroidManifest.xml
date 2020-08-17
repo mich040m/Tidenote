@@ -3,6 +3,7 @@
     package="tideware.app.tidenote">
 
     <application
+        android:name=".TidewareApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_tidenote_icon_512x512"
         android:label="@string/app_name"

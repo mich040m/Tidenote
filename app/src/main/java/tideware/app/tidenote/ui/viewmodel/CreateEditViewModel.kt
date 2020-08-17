@@ -1,6 +1,7 @@
 package tideware.app.tidenote.ui.viewmodel
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -11,12 +12,11 @@ import tideware.app.tidenote.data.ApplicationDatabase
 import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.data.repo.NoteRepository
 
-class CreateEditViewModel(application: Application): AndroidViewModel(application) {
-    private val repository : NoteRepository
+class CreateEditViewModel @ViewModelInject constructor(
+    val repository: NoteRepository
+): ViewModel() {
 
     init {
-        val noteDao = ApplicationDatabase.getDatabase(application).noteDao()
-        repository = NoteRepository(noteDao)
     }
 
     fun insertNote(note: Note){
