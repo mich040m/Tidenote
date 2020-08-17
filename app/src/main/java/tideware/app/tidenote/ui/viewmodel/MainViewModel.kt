@@ -12,7 +12,8 @@ import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.data.repo.NoteRepository
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
-     val notes: LiveData<List<Note>>
+     var notes: LiveData<List<Note>>
+
     private val repository : NoteRepository
 
     init {
@@ -25,6 +26,13 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             repository.deleteAllNotes()
         }
     }
+    fun updateNote(note: Note){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateNote(note)
+            notes = repository.getAllNotes()
+        }
+    }
+
 
 
 

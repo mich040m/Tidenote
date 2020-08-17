@@ -28,6 +28,7 @@ class CreateEditFragment : Fragment() {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         createEditViewModel = ViewModelProvider(this).get(CreateEditViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_create_edit, container, false)
 
     }
@@ -36,7 +37,19 @@ class CreateEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val note = getNoteFromArgs()
+        if(note != null)
+        {
+            favorite_toggle_button_edit.isChecked = note.favorite
+            FavoriteService().changeFavorite(
+                this.requireContext(),
+                note,
+                favorite_toggle_button_edit)
 
+            note_title_edit.setText(note.title)
+            note_text_edit.setText(note.text)
+
+
+        }
 
         favorite_toggle_button_edit.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
@@ -45,18 +58,13 @@ class CreateEditFragment : Fragment() {
                 buttonView.setBackground(ContextCompat.getDrawable(this.requireContext(), R.drawable.ic_unchecked_star))
             }
         }
-        if(note != null)
-        {
-            FavoriteService().changeFavorite(this.requireContext(),note,favorite_toggle_button_edit)
-            note_title_edit.setText(note.title)
-            note_text_edit.setText(note.text)
 
-
-        }
 
         fab_create.setOnClickListener {
+
             insertNote(note?.id)
-            navigateToMain()
+
+            activity?.onBackPressed()
         }
 
 
@@ -64,7 +72,10 @@ class CreateEditFragment : Fragment() {
     }
 
     private fun navigateToMain() {
+
         findNavController().navigate(R.id.action_CreateEditFragment_to_MainFragment)
+
+
     }
 
     private fun getNoteFromArgs(): Note? {

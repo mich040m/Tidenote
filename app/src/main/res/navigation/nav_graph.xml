@@ -13,7 +13,8 @@
 
         <action
             android:id="@+id/action_MainFragment_to_CreateEditFragment"
-            app:destination="@id/CreateEditFragment" />
+            app:destination="@id/CreateEditFragment"
+            />
 
     </fragment>
     <fragment
@@ -29,6 +30,7 @@
             android:name="note"
             app:argType="tideware.app.tidenote.data.model.Note"
             app:nullable="true"
-            android:defaultValue="@null" />
+            android:defaultValue="@null"
+            />
     </fragment>
 </navigation>
