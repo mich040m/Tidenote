@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_edit.*
 import tideware.app.tidenote.R
 import tideware.app.tidenote.data.model.Note
@@ -18,16 +20,17 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
+@AndroidEntryPoint
 class CreateEditFragment : Fragment() {
 
-    private lateinit var createEditViewModel: CreateEditViewModel
+    private val createEditViewModel: CreateEditViewModel by viewModels()
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        createEditViewModel = ViewModelProvider(this).get(CreateEditViewModel::class.java)
+
 
         return inflater.inflate(R.layout.fragment_create_edit, container, false)
 

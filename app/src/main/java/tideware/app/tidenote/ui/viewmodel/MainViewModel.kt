@@ -1,6 +1,7 @@
 package tideware.app.tidenote.ui.viewmodel
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -11,14 +12,14 @@ import tideware.app.tidenote.data.ApplicationDatabase
 import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.data.repo.NoteRepository
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel  @ViewModelInject constructor(
+    val repository: NoteRepository
+): ViewModel() {
+
      var notes: LiveData<List<Note>>
 
-    private val repository : NoteRepository
-
     init {
-        val noteDao = ApplicationDatabase.getDatabase(application).noteDao()
-        repository = NoteRepository(noteDao)
+
         notes = repository.getAllNotes()
     }
     fun deleteAllNotes(){

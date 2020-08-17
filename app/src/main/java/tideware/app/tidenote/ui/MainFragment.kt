@@ -21,6 +21,8 @@ import tideware.app.tidenote.ui.adapter.CellClickListener
 import tideware.app.tidenote.ui.adapter.NoteViewAdapter
 import tideware.app.tidenote.ui.viewmodel.MainViewModel
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import tideware.app.tidenote.services.FavoriteService
 import tideware.app.tidenote.ui.adapter.FavoriteClickListener
 
@@ -28,16 +30,17 @@ import tideware.app.tidenote.ui.adapter.FavoriteClickListener
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
 
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         setHasOptionsMenu(true)
         val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
         if (FavoriteService.FavoriteService.check)
