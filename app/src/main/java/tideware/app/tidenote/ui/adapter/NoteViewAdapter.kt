@@ -1,5 +1,6 @@
 package tideware.app.tidenote.ui.adapter
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -8,7 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import tideware.app.tidenote.R
 import tideware.app.tidenote.data.model.Note
+import tideware.app.tidenote.services.DateService
+import tideware.app.tidenote.services.DateService.DataService.agoConverter
 import tideware.app.tidenote.services.FavoriteService
+import java.util.*
+
+
 
 class NoteViewAdapter(private val cellClickListener: CellClickListener,private val favoriteClickListener: FavoriteClickListener) : RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>() {
     private var notes = emptyList<Note>()
@@ -25,7 +31,7 @@ class NoteViewAdapter(private val cellClickListener: CellClickListener,private v
         fun bind(note: Note){
             myTitleView?.text = note.title
             myTextView?.text = note.text
-
+            myDate?.text = note.lastTimeEdited.agoConverter()
 
          /*   if (note.favorite){
                 myFavorite?.setBackground(ContextCompat.getDrawable(itemView.context, R.drawable.ic_checked_star))

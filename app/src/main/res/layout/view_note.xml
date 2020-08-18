@@ -6,12 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/view_note_layout"
-    android:layout_margin="8dp"
-    android:elevation="2dp"
+
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginBottom="4dp"
+    android:outlineAmbientShadowColor="#000000"
+    android:outlineSpotShadowColor="#000000"
+    android:elevation="4dp"
     android:background="@color/colorPrimary"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:textColor="#000000"
             android:ellipsize="end"
             android:hint="@string/note_title_hint"
@@ -42,6 +49,7 @@
             android:layout_marginStart="12dp"
 
             android:ellipsize="end"
+
             android:hint="@string/note_hint"
             android:importantForAutofill="no"
             android:maxLines="1"
@@ -51,12 +59,14 @@
 
         <TextView
             android:id="@+id/note_date"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/favorite_time_margin"
             android:ellipsize="end"
+            android:textAlignment="center"
             android:hint="@string/sample_time"
             android:importantForAutofill="no"
+            android:textSize="10sp"
             android:maxLines="1"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +82,7 @@
             android:layout_centerVertical="true"
 
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/favorite_time_margin"
             android:background="@drawable/ic_unchecked_star"
             android:textOff=""
             android:textOn=""
@@ -83,10 +93,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:background="@android:color/darker_gray"
             app:layout_constraintEnd_toEndOf="@+id/note_text"
             app:layout_constraintStart_toStartOf="@+id/note_text"
-            app:layout_constraintTop_toBottomOf="@+id/note_text" />
+            app:layout_constraintTop_toBottomOf="@+id/note_text"
+
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

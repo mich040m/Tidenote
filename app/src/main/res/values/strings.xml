@@ -12,7 +12,7 @@
     <string name="note_hint">Start your note here!</string>
     <string name="note_title_hint">Write your title here!</string>
     <string name="date_template">01/01</string>
-    <string name="sample_time">10m</string>
+    <string name="sample_time">0 minutes</string>
     <string name="delete_all_notes">Delete All Notes</string>
     <string name="delete_action">Delete</string>
 </resources>

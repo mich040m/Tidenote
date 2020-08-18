@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_edit.*
 import tideware.app.tidenote.R
 import tideware.app.tidenote.data.model.Note
+import tideware.app.tidenote.services.DateService.DataService.agoConverter
 import tideware.app.tidenote.services.FavoriteService
 import tideware.app.tidenote.ui.viewmodel.CreateEditViewModel
 import java.util.*
@@ -48,8 +49,10 @@ class CreateEditFragment : Fragment() {
                 note,
                 favorite_toggle_button_edit)
 
+
             note_title_edit.setText(note.title)
             note_text_edit.setText(note.text)
+            note_date_edit.setText(note.lastTimeEdited.agoConverter())
 
 
         }
