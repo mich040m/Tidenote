@@ -1,5 +1,6 @@
 # Tidenote
 Made by michalodzien 
+
 Discord: Smese#1819
 # Built With 🛠
 * Kotlin
