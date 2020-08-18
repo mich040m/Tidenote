@@ -16,6 +16,10 @@ class NoteRepository @Inject constructor (val noteDao: NoteDao) {
     fun getAllNotes():LiveData<List<Note>>{
         return noteDao.getAllNotes()
     }
+
+    fun getAllNotesFavoriteOrder():LiveData<List<Note>>{
+        return noteDao.getAllNotesFavoriteOrder()
+    }
     suspend fun deleteAllNotes(){
         noteDao.deleteAllNotes()
     }

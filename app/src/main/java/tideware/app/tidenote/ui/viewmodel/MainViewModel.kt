@@ -15,12 +15,12 @@ import tideware.app.tidenote.data.repo.NoteRepository
 class MainViewModel  @ViewModelInject constructor(
     val repository: NoteRepository
 ): ViewModel() {
-
      var notes: LiveData<List<Note>>
+     var favoriteNotes: LiveData<List<Note>>
 
     init {
-
         notes = repository.getAllNotes()
+        favoriteNotes = repository.getAllNotesFavoriteOrder()
     }
     fun deleteAllNotes(){
         viewModelScope.launch(Dispatchers.IO){
@@ -33,8 +33,4 @@ class MainViewModel  @ViewModelInject constructor(
             notes = repository.getAllNotes()
         }
     }
-
-
-
-
 }

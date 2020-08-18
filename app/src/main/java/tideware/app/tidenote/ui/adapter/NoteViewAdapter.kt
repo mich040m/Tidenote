@@ -83,6 +83,7 @@ class NoteViewAdapter(private val cellClickListener: CellClickListener,private v
     override fun getItemCount(): Int = notes.count()
 
     fun setData(notes: List<Note>){
+
         this.notes = notes
         notifyDataSetChanged()
     }

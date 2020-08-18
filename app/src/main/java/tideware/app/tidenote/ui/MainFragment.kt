@@ -42,33 +42,6 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
         // Inflate the layout for this fragment
 
         setHasOptionsMenu(true)
-        val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
-        if (FavoriteService.FavoriteService.check)
-            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
-        else
-            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
-
-
-
-        val onBackPressedCallback = object: OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-
-                checkFavoriteIconChange(t)
-
-            }
-        }
-        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner,onBackPressedCallback)
-
-      //  (activity as AppCompatActivity?)!!.supportActionBar?.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star))
-
-
-        //(activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
-
-
-
-
         return inflater.inflate(R.layout.fragment_main, container, false)
 
     }
@@ -85,26 +58,54 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
+        
         val adapter = NoteViewAdapter(this,this)
         val recycler = view.note_recycler_view
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(activity)
+        if (FavoriteService.FavoriteService.check)
+            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
+        else
+            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+        val onBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+
+                checkFavoriteIconChange(t)
+                if (FavoriteService.FavoriteService.check){
+                    mainViewModel.favoriteNotes.observe(viewLifecycleOwner) {
+                        adapter.setData(it)
+                    }
+                    mainViewModel.notes.removeObservers(viewLifecycleOwner)
+
+                }else{
+                    mainViewModel.notes.observe(viewLifecycleOwner) {
+                        adapter.setData(it)
+                    }
+                    mainViewModel.favoriteNotes.removeObservers(viewLifecycleOwner)
+
+                }
+            }
+        }
+        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner,onBackPressedCallback)
+
 
         mainViewModel.notes.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
 
         fab_main.setOnClickListener {
-
-            findNavController().navigate(R.id.action_MainFragment_to_CreateEditFragment)
+            if(findNavController().currentDestination?.id != R.id.CreateEditFragment){
+                findNavController().navigate(R.id.action_MainFragment_to_CreateEditFragment)
+            }
         }
     }
 
     override fun onCellClickListener(note: Note) {
+        if(findNavController().currentDestination?.id != R.id.CreateEditFragment){
         val action = MainFragmentDirections.actionMainFragmentToCreateEditFragment(note)
         findNavController().navigate(action)
-
+        }
     }
 
 
