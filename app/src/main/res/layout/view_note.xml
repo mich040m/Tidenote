@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/view_note_layout"
@@ -64,7 +65,7 @@
             android:layout_marginEnd="@dimen/favorite_time_margin"
             android:ellipsize="end"
             android:textAlignment="center"
-            android:hint="@string/sample_time"
+            android:text="@string/sample_time"
             android:importantForAutofill="no"
             android:textSize="10sp"
             android:maxLines="1"
@@ -72,7 +73,24 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toStartOf="@+id/favorite_toggle_button"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button" />
+            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/ago"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="@string/ago"
+            android:importantForAutofill="no"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="10sp"
+
+            app:layout_constraintEnd_toEndOf="@+id/note_date"
+            app:layout_constraintStart_toStartOf="@+id/note_date"
+            app:layout_constraintTop_toBottomOf="@+id/note_date"
+            tools:ignore="SmallSp" />
 
         <ToggleButton
             android:id="@+id/favorite_toggle_button"

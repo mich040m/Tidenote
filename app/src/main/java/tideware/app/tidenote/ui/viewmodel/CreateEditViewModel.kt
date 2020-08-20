@@ -13,7 +13,7 @@ import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.data.repo.NoteRepository
 
 class CreateEditViewModel @ViewModelInject constructor(
-    val repository: NoteRepository
+    private val repository: NoteRepository
 ): ViewModel() {
 
     init {

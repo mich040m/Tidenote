@@ -79,7 +79,23 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toStartOf="@+id/favorite_toggle_button_edit"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/favorite_toggle_button_edit"
+            tools:ignore="SmallSp" />
+        <TextView
+            android:id="@+id/ago"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="@string/ago"
+            android:importantForAutofill="no"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="10sp"
+
+            app:layout_constraintEnd_toEndOf="@+id/note_date_edit"
+            app:layout_constraintStart_toStartOf="@+id/note_date_edit"
+            app:layout_constraintTop_toBottomOf="@+id/note_date_edit"
+            tools:ignore="SmallSp" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"

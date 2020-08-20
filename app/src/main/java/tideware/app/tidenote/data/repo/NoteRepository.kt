@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import tideware.app.tidenote.data.model.Note
 import tideware.app.tidenote.data.model.NoteDao
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class NoteRepository @Inject constructor (val noteDao: NoteDao) {
-
-
+class NoteRepository @Inject constructor (private val noteDao: NoteDao) {
 
     suspend fun insertNote(note: Note){
         noteDao.insertNote(note)
@@ -19,6 +18,9 @@ class NoteRepository @Inject constructor (val noteDao: NoteDao) {
 
     fun getAllNotesFavoriteOrder():LiveData<List<Note>>{
         return noteDao.getAllNotesFavoriteOrder()
+    }
+    fun getAllNotesQueryTitle(searchString : String) : LiveData<List<Note>> {
+        return noteDao.getAllNotesQueryTitle(searchString)
     }
     suspend fun deleteAllNotes(){
         noteDao.deleteAllNotes()

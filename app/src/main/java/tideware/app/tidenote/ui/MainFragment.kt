@@ -7,6 +7,7 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +23,10 @@ import tideware.app.tidenote.ui.adapter.NoteViewAdapter
 import tideware.app.tidenote.ui.viewmodel.MainViewModel
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import tideware.app.tidenote.other.NoteSortType
 import tideware.app.tidenote.services.FavoriteService
 import tideware.app.tidenote.ui.adapter.FavoriteClickListener
 
@@ -34,13 +38,13 @@ import tideware.app.tidenote.ui.adapter.FavoriteClickListener
 class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
 
     private val mainViewModel: MainViewModel by viewModels()
+    val adapter = NoteViewAdapter(this,this)
+    private lateinit var t:androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
 
@@ -58,46 +62,42 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
-        
-        val adapter = NoteViewAdapter(this,this)
+        t = requireActivity().findViewById(R.id.toolbar)
         val recycler = view.note_recycler_view
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(activity)
-        if (FavoriteService.FavoriteService.check)
-            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
-        else
-            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
-        val onBackPressedCallback = object: OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-
-                checkFavoriteIconChange(t)
-                if (FavoriteService.FavoriteService.check){
-                    mainViewModel.favoriteNotes.observe(viewLifecycleOwner) {
-                        adapter.setData(it)
-                    }
-                    mainViewModel.notes.removeObservers(viewLifecycleOwner)
-
-                }else{
-                    mainViewModel.notes.observe(viewLifecycleOwner) {
-                        adapter.setData(it)
-                    }
-                    mainViewModel.favoriteNotes.removeObservers(viewLifecycleOwner)
-
-                }
-            }
-        }
-        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner,onBackPressedCallback)
-
-
-        mainViewModel.notes.observe(viewLifecycleOwner) {
+        mainViewModel.notesMediator.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
+
+        t.setNavigationOnClickListener {
+            checkFavoriteIconChange(t)
+            if (FavoriteService.FavoriteService.check){
+
+                mainViewModel.sortNotes(NoteSortType.FAVORITE)
+            }else{
+                mainViewModel.sortNotes(NoteSortType.LAST_TIME_EDITED)
+            }
+        }
+
+        refreshRecyclerView()
 
         fab_main.setOnClickListener {
             if(findNavController().currentDestination?.id != R.id.CreateEditFragment){
                 findNavController().navigate(R.id.action_MainFragment_to_CreateEditFragment)
             }
+        }
+    }
+
+    private fun refreshRecyclerView() {
+
+        if (FavoriteService.FavoriteService.check) {
+            t.navigationIcon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_checked_star)
+            mainViewModel.sortNotes(NoteSortType.FAVORITE)
+        } else {
+            t.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+            mainViewModel.sortNotes(NoteSortType.LAST_TIME_EDITED)
         }
     }
 
@@ -108,16 +108,40 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
         }
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
         inflater.inflate(R.menu.menu_main,menu)
+        val menuItem = menu.findItem(R.id.action_search)
+
+        if(menuItem != null){
+            val searchView = menuItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null) {
+                        mainViewModel.searchNotes(newText)
+                    }
+                    return true
+                }
+            })
+
+            searchView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                override fun onViewAttachedToWindow(v: View?) {
+                    //click search btn
+                }
+                override fun onViewDetachedFromWindow(v: View?) {
+                    //click back button after clicked search button
+                    refreshRecyclerView()
+                }
+
+            })
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_delete_all ->{
                 deleteAllNotes()
@@ -125,7 +149,6 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
             }
             else -> return super.onOptionsItemSelected(item)
         }
-
     }
 
     private fun deleteAllNotes() {
@@ -138,21 +161,12 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
         builder.setMessage("Are you sure you want to delete all notes?")
         builder.setNegativeButton("No"){ _,_ -> }
         builder.create().show()
-
     }
 
     override fun onFavoriteClickListener(
         note: Note
     ) {
-
             mainViewModel.updateNote(note)
-
-
-
-
-
     }
-
-    //listOf(Note("bla","ble",true,Calendar.getInstance().time,Date(2019,7,7,0,7)),Note("test","test",false,Calendar.getInstance().time, Date(2020,7,4,2,6)))
 
 }

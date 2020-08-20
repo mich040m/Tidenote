@@ -9,11 +9,14 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note)
 
-    @Query("SELECT * FROM note_table ORDER BY created DESC")
+    @Query("SELECT * FROM note_table ORDER BY lastTimeEdited DESC")
     fun getAllNotes() : LiveData<List<Note>>
 
-    @Query("SELECT * FROM note_table ORDER BY favorite DESC")
+    @Query("SELECT * FROM note_table ORDER BY favorite DESC,lastTimeEdited DESC")
     fun getAllNotesFavoriteOrder() : LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table WHERE title LIKE '%' || :searchString || '%' ORDER BY title ASC")
+    fun getAllNotesQueryTitle(searchString : String) : LiveData<List<Note>>
 
     @Query("DELETE FROM note_table")
     suspend fun deleteAllNotes()

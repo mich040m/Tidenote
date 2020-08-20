@@ -39,7 +39,10 @@ class CreateEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val t:androidx.appcompat.widget.Toolbar  = requireActivity().findViewById(R.id.toolbar)
+        t.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
         val note = getNoteFromArgs()
         if(note != null)
         {
