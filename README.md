@@ -2,6 +2,8 @@
 Made by michalodzien 
 
 Discord: Smese#1819
+
+My first android app
 # Built With 🛠
 * Kotlin
 * Android Architecture Components - Collection of libraries that help you design robust, testable, and maintainable apps.
