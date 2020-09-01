@@ -41,6 +41,7 @@ class MainViewModel  @ViewModelInject constructor(
         }
 
     }
+
     fun searchNotes(searchString : String){
         sortType = NoteSortType.SEARCH
         this.searchString.value = searchString

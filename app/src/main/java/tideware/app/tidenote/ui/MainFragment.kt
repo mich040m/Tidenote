@@ -57,6 +57,7 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
         } else if (FavoriteService.FavoriteService.check) {
             FavoriteService.FavoriteService.check = false
             toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+
         }
     }
 
