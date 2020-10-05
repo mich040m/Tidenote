@@ -17,5 +17,5 @@
     <string name="delete_action">Delete</string>
     <string name="ago">ago</string>
     <string name="about_text">About</string>
-    <string name="about_content_text">Made by: \n Discord: Smese #1819 \n Using MVVM, coroutines, room and \n Nav component </string>
+    <string name="about_content_text">Made by: \n Discord: Smese #1819 \n Using MVVM, coroutines, room and \n Nav component \n Enjoy! </string>
 </resources>
