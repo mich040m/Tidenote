@@ -148,6 +148,11 @@ class MainFragment : Fragment(), CellClickListener, FavoriteClickListener {
                 deleteAllNotes()
                 true
             }
+            R.id.action_about ->{
+                val aboutDialog = AboutDialog()
+                aboutDialog.show(parentFragmentManager,"aboutdialog")
+                true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
